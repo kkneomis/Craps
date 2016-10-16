@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package craps;
 
 import java.util.ArrayList;
@@ -11,24 +7,34 @@ import java.util.Scanner;
 
 /**
  *
- * @author simeonkakpovi
+ * @author Simeon Kakpovi
+ * Java course at Howard university
+ * Midterm project
+ * Professor: Alton Henley
  */
 public class Craps {
    
     /**
-     * @param args the command line arguments
+     * 
+     * @param args
+     * User starts with $1000
+     * User can bet up to max pot into to win more
+     * Game is terminated if the user rolls 0
+     * or if they have $0 left
      */
     public static void main(String[] args) {
         
         ArrayList<String> events = new ArrayList<>();
-        int pot = 0; //this is how much money they have
+        System.out.println("We'll start you with $1000");
+        int pot = 1000; //this is how much money they have
         
-        int atStake = getBet();
+        int atStake = getBet(pot);
+
         
-        while(atStake > 0){
-            int start = firstRoll(); //the player rolls die and get an outcome
+        while((atStake * pot > 0)){//neither can be 0
+            int start = firstRoll(); //the player rolls die and gets an outcome
             switch (start) {
-                case 1:
+                case 1: 
                     System.out.println("$"+ atStake + " added to your pot");
                     events.add("You won $"+ atStake  );
                     pot += atStake;
@@ -39,7 +45,7 @@ public class Craps {
                     pot -= atStake;
                     break;
                 default:
-                    //if they didnt win or lose
+                    //if they didnt win or lose on first roll
                     //do other stuff
                     int round = playPoint();
                     if (round == 1){
@@ -54,7 +60,7 @@ public class Craps {
             }//end switch
             
             System.out.println("Your total pot is $" + pot+'\n');
-            atStake = getBet();
+            atStake = getBet(pot);
         }//end while
         
         events.stream().forEach((event) -> {
@@ -64,6 +70,11 @@ public class Craps {
     }
     
     
+    /*
+    First roll is set as point
+    If the user consequenty rolls point, they win
+    If the user rolls 7, they lose
+    */
     public static int playPoint(){
         //do other stuff
         int result = 0;
@@ -81,14 +92,20 @@ public class Craps {
                 System.out.println("Congratulations! You rolled POINT so you  win!");
                 playing = 1;
                 result = 1;
-            } else{
+            } else {
                 System.out.println("You rolled a " + newRoll + " POINT is " + POINT);
             }
         }
         
-        return result; //this should never occur
+        return result; 
     }
     
+    
+    /*
+    Get the result of the user's first roll
+    User wills if they get a 7 or 11
+    User loses if they get a 2,3, or 12
+    */
     public static int firstRoll(){
         
         int roll = getRolls();
@@ -105,29 +122,34 @@ public class Craps {
         }
     }
     
+    
+    /*
+    Get the result of two dice rolls
+    */
     public static int getRolls(){
-        //retuns the sum of two rols
-        int die1 = roll();
-        int die2 = roll();
+        Random rnd = new Random();
+        int die1 = 1 + rnd.nextInt(5);
+        int die2 = 1 + rnd.nextInt(5);
         
         int sum = die1 + die2;
         return sum; 
     }
     
     
-    public static int roll(){
-    	int dienumber;
-        Random rnd = new Random();
-        
-        dienumber =  1 + rnd.nextInt(5);
-        return dienumber;
-    }
-    
-    
-    public static int getBet(){
+  
+    /*
+    Getting the bet from the user
+    User cannot bet more than they have
+    */
+    public static int getBet(int pot){
         System.out.println("How much would you like to bet?");
         Scanner sc = new Scanner(System.in);
         int amount = sc.nextInt();
+        while(amount > pot){
+            System.out.println("You cannot bet more than you have");
+            System.out.println("How much would you like to bet?");
+            amount = sc.nextInt();
+        }
         return amount;
     }
     
