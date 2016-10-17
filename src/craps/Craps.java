@@ -77,27 +77,22 @@ public class Craps {
     */
     public static int playPoint(){
         //do other stuff
-        int result = 0;
         int POINT = getRolls();
         System.out.println("You rolled a " + POINT + " This is now POINT"); //this is POINT
             
-        int playing = 0;
-        while (playing == 0){
+        while (true){
             int newRoll = getRolls();
             if (newRoll == 7){
                 System.out.println("Sorry! You rolled a 7 so you lose!");
-                playing = 1;
-                result = 0;
-            } else if (newRoll == POINT) {
+                return 0;
+            } else if (POINT == newRoll) {
                 System.out.println("Congratulations! You rolled POINT so you  win!");
-                playing = 1;
-                result = 1;
+                return 1;
             } else {
                 System.out.println("You rolled a " + newRoll + " POINT is " + POINT);
             }
         }
         
-        return result; 
     }
     
     
