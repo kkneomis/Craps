@@ -30,7 +30,6 @@ public class Craps {
         
         int atStake = getBet(pot);
 
-        
         while((atStake * pot > 0)){//neither can be 0
             int start = firstRoll(); //the player rolls die and gets an outcome
             switch (start) {
@@ -82,7 +81,7 @@ public class Craps {
             
         while (true){
             int newRoll = getRolls();
-            if (newRoll == 7){
+            if ((newRoll == 7) || (POINT == 7)){  //if point is 7, don't bother
                 System.out.println("Sorry! You rolled a 7 so you lose!");
                 return 0;
             } else if (POINT == newRoll) {
@@ -129,8 +128,6 @@ public class Craps {
         int sum = die1 + die2;
         return sum; 
     }
-    
-    
   
     /*
     Getting the bet from the user
