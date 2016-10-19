@@ -97,7 +97,7 @@ public class Craps {
     
     /*
     Get the result of the user's first roll
-    User wills if they get a 7 or 11
+    User wins if they get a 7 or 11
     User loses if they get a 2,3, or 12
     */
     public static int firstRoll(){
